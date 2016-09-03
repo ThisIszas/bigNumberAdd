@@ -16,20 +16,13 @@ int main(){
 }
 
 string calculate(string a,string b){
-	int temp=0,i=0,sumOfZero=0,minNumberLength,carryBit=0,fn,sn,j=0;
-	string flag,zeros,kk="",re;
-	int result[256];
-	if(a.length() > b.length())
-	{
-		minNumberLength = b.length();
-		flag = "b";
-	} 
-	else{
-		minNumberLength = a.length();
-		flag = "a";
-	}
+	int temp=0,i=0,sumOfZero=0,carryBit=0,fn,sn;
+	string flag,zeros,reverse_Order_Result="",result;
 	
-	if(flag=="a"){
+	if(a.length() > b.length()) flag = "b";//找出a,b字符串中较短的那个. 
+	else flag = "a";
+	
+	if(flag=="a"){         //若a较短,则在a前面补0,如a="123"->a="000123"; 
 		sumOfZero = b.length() - a.length();
 		for(i=0;i<sumOfZero;i++){
 			zeros+="0";
@@ -44,23 +37,22 @@ string calculate(string a,string b){
 		b= zeros + b;
 	} 
 	
-	for(i=(a.length()-1);i>=0;i--){
+	for(i=(a.length()-1);i>=0;i--){//这里就是小学数学的竖式相加法了. carryBit表示进位. 
 		fn = a[i]-'0';
-		sn = b[i]-'0';
-		temp = fn+sn+carryBit;
-		carryBit = 0;
-		if(temp>9){
+		sn = b[i]-'0';                             //     457
+		temp = fn+sn+carryBit;                     //   + 123
+		carryBit = 0;//使用完进位后,将进位置零.    // -----------
+		if(temp>9){                                //   = 580 
 			carryBit = 1;
 			temp = temp - 10; 
 		}
 		char temp2[256];
 		itoa(temp,temp2,10);
-		kk+=temp2;
-		result[j] = temp;
-		j++;
+		reverse_Order_Result+=temp2;
 	}
-	if(carryBit==1) kk=kk+'1';
-	for(i=kk.length()-1;i>=0;i--) re+=kk[i];
-	return re;
+	
+	if(carryBit==1) reverse_Order_Result=reverse_Order_Result+'1';
+	for(i=reverse_Order_Result.length()-1;i>=0;i--) result+=reverse_Order_Result[i];
+	return result;
 }
 
