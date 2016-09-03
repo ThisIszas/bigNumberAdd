@@ -11,12 +11,13 @@ int main(){
 	cout<<"输入第一个数字和第二个数字.\n"; 
 	cin>>fn>>sn;
 	string result;
-	calculate(fn,sn);
+	result=calculate(fn,sn);
+	cout<<result<<endl;
 }
 
 string calculate(string a,string b){
 	int temp=0,i=0,sumOfZero=0,minNumberLength,carryBit=0,fn,sn,j=0;
-	string flag,zeros;
+	string flag,zeros,kk="",re;
 	int result[256];
 	if(a.length() > b.length())
 	{
@@ -52,17 +53,14 @@ string calculate(string a,string b){
 			carryBit = 1;
 			temp = temp - 10; 
 		}
+		char temp2[256];
+		itoa(temp,temp2,10);
+		kk+=temp2;
 		result[j] = temp;
 		j++;
 	}
-	temp=0;
-	if(carryBit==1) cout<<1;
-	for(i=j-1;i>=0;i--){
-		if((j-i+2)%3==0 && temp!=0) cout<<",";
-		cout<<result[i];
-		temp++;
-	}
-	cout<<endl;
-	return "1";
+	if(carryBit==1) kk=kk+'1';
+	for(i=kk.length()-1;i>=0;i--) re+=kk[i];
+	return re;
 }
 
